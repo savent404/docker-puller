@@ -1,0 +1,2 @@
+snipe/snipe-it:v6.3.4
+mariadb:11.5.2

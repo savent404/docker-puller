@@ -24,20 +24,11 @@ jobs:
 
     - name: Sync Docker Images
       run: |
-        # Extract the changed lines from the commit
-        if git rev-parse HEAD^1 >/dev/null 2>&1; then
-          CHANGED_IMAGES=$(git diff HEAD^1 HEAD -- images.txt | grep '^+' | grep -v '^+++' | sed 's/^+//')
-        else
-          CHANGED_IMAGES=$(git diff HEAD -- images.txt | grep '^+' | grep -v '^+++' | sed 's/^+//')
-        fi
+        # Read all images from images.txt
+        IMAGES=$(cat images.txt)
 
-        if [ -z "$CHANGED_IMAGES" ]; then
-          echo "No changes detected in images.txt"
-          exit 0
-        fi
-
-        # Loop over each changed image and pull/push it
-        for image in $CHANGED_IMAGES; do
+        # Loop over each image and pull/push it
+        for image in $IMAGES; do
           echo "Processing $image"
           docker pull $image
           docker tag $image ${{ secrets.REGISTRY_URL }}/$image

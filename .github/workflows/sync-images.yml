@@ -26,10 +26,12 @@ jobs:
       run: |
         # Read all image mappings from images.txt
         while IFS=' -> ' read -r src_image dest_image; do
-          echo "Processing $src_image -> $dest_image"
-          docker pull $src_image
-          docker tag $src_image $dest_image
-          docker push $dest_image
+          if [ -n "$src_image" ] && [ -n "$dest_image" ]; then
+            echo "Processing $src_image -> $dest_image"
+            docker pull "$src_image"
+            docker tag "$src_image" "$dest_image"
+            docker push "$dest_image"
+          fi
         done < images.txt
 
     - name: Log out from DockerHub

@@ -25,7 +25,7 @@ jobs:
     - name: Sync Docker Images
       run: |
         # Extract the changed lines from the commit
-        CHANGED_IMAGES=$(git diff HEAD^ HEAD -- images.txt | grep '^+' | grep -v '^+++' | sed 's/^+//')
+        CHANGED_IMAGES=$(git diff HEAD^1 HEAD -- images.txt | grep '^+' | grep -v '^+++' | sed 's/^+//')
 
         if [ -z "$CHANGED_IMAGES" ]; then
           echo "No changes detected in images.txt"

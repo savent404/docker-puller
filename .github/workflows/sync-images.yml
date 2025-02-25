@@ -1,0 +1,47 @@
+name: Sync Docker Images
+
+on:
+  push:
+    paths:
+      - 'images.txt'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to DockerHub
+      run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+    - name: Log in to Target Registry
+      run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
+
+    - name: Sync Docker Images
+      run: |
+        # Extract the changed lines from the commit
+        CHANGED_IMAGES=$(git diff HEAD^ HEAD -- images.txt | grep '^+' | grep -v '^+++' | sed 's/^+//')
+
+        if [ -z "$CHANGED_IMAGES" ]; then
+          echo "No changes detected in images.txt"
+          exit 0
+        fi
+
+        # Loop over each changed image and pull/push it
+        for image in $CHANGED_IMAGES; do
+          echo "Processing $image"
+          docker pull $image
+          docker tag $image ${{ secrets.REGISTRY_URL }}/$image
+          docker push ${{ secrets.REGISTRY_URL }}/$image
+        done
+
+    - name: Log out from DockerHub
+      run: docker logout
+
+    - name: Log out from Target Registry
+      run: docker logout ${{ secrets.REGISTRY_URL }}

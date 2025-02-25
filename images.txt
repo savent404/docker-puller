@@ -1,2 +1,2 @@
-library/mariadb:11.5.2 -> mariadb:11.5.2
-snipe/snipe-it:v6.3.4 -> snipe-it:v6.3.4
+library/mariadb:11.5.2 -> mirror_savent/mariadb:11.5.2
+snipe/snipe-it:v6.3.4 -> mirror_savent/snipe-it:v6.3.4

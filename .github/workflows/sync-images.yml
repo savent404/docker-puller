@@ -24,16 +24,13 @@ jobs:
 
     - name: Sync Docker Images
       run: |
-        # Read all images from images.txt
-        IMAGES=$(cat images.txt)
-
-        # Loop over each image and pull/push it
-        for image in $IMAGES; do
-          echo "Processing $image"
-          docker pull $image
-          docker tag $image ${{ secrets.REGISTRY_URL }}/$image
-          docker push ${{ secrets.REGISTRY_URL }}/$image
-        done
+        # Read all image mappings from images.txt
+        while IFS=' -> ' read -r src_image dest_image; do
+          echo "Processing $src_image -> $dest_image"
+          docker pull $src_image
+          docker tag $src_image $dest_image
+          docker push $dest_image
+        done < images.txt
 
     - name: Log out from DockerHub
       run: docker logout

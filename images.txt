@@ -1,2 +1,2 @@
-library/mariadb:11.5.2 -> savent404/mariadb:11.5.2
-snipe/snipe-it:v6.3.4 -> savent404/snipe-it:v6.3.4
+library/mariadb:11.5.2 -> mariadb:11.5.2
+snipe/snipe-it:v6.3.4 -> snipe-it:v6.3.4

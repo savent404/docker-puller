@@ -29,8 +29,8 @@ jobs:
           if [ -n "$src_image" ] && [ -n "$dest_image" ]; then
             echo "Processing $src_image -> $dest_image"
             docker pull "$src_image"
-            docker tag "$src_image" "$dest_image"
-            docker push "$dest_image"
+            docker tag "$src_image" "${{ secrets.REGISTRY_PASSWORD }}/$dest_image"
+            docker push "${{ secrets.REGISTRY_PASSWORD }}/$dest_image"
           fi
         done < images.txt
 

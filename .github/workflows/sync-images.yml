@@ -25,7 +25,7 @@ jobs:
     - name: Sync Docker Images
       run: |
         # Read all image mappings from images.txt
-        while IFS=' -> ' read -r src_image dest_image; do
+        while IFS=' > ' read -r src_image dest_image; do
           if [ -n "$src_image" ] && [ -n "$dest_image" ]; then
             echo "Processing $src_image -> $dest_image"
             docker pull "$src_image"

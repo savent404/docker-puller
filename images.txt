@@ -1,3 +1,4 @@
 library/mariadb:11.5.2 > savent404/mariadb:11.5.2
 library/mariadb:11.5.2 > savent404/mariadb:11.5.2
 snipe/snipe-it:v6.3.4 > savent404/snipe-it:v6.3.4
+ltbproject/self-service-password:1.7.2 > savent404/self-service-password:1.7.2

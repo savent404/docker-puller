@@ -10,3 +10,4 @@ library/mysql:latest > savent404/mysql:latest
 library/redis:6 > savent404/redis:6
 library/redis:latest > savent404/redis:latest
 library/ubuntu:latest > savent404/ubuntu:latest
+solidinvoice/solidinvoice:2.3 -> savent404/solidinvoice:2.3
